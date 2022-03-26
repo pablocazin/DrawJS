@@ -1,12 +1,35 @@
 let tableau = document.getElementById("tableau");
-let colors = document.getElementById("colors");
+let colors1 = document.getElementById("colors1");
+let colors2 = document.getElementById("colors2");
 let submit = document
   .getElementById("submit")
   .addEventListener("click", ajouterCouleur);
 let newColor = document.getElementById("newColor");
-let colorsPalette = ["#FF0000", "#00FF00", "#FF00FF", "#0000FF"];
+let colorsPalette = [
+  "#e4cab5",
+  "#383a3a",
+  "#3c7b7f",
+  "#075171",
+  "#4c6588",
+  "#844d6c",
+  "#634870",
+  "#878a5d",
+  "#659962",
+  "#ea6d30",
+  "#db1640",
+  "#ef8668",
+  "#dfcdcb",
+  "#612655",
+];
 let cases = [];
 let selectedColor = undefined;
+let etat = "mouseup";
+window.addEventListener("mousedown", () => {
+  etat = "mousedown";
+});
+window.addEventListener("mouseup", () => {
+  etat = "mouseup";
+});
 
 // ajouter une couleur a la palette
 function ajouterCouleur() {
@@ -25,21 +48,27 @@ function ajouterCouleur() {
 
 // creer les éléments HTML des couleurs
 function createColors() {
-  colors.innerText = "";
+  colors1.innerText = "";
+  colors2.innerText = "";
+  let count = 0;
   for (let i of colorsPalette) {
     let div = document.createElement("div");
     div.classList.add("colors");
     div.dataset.color = i;
     div.style.backgroundColor = i;
     div.addEventListener("click", newSelectedColor);
-    colors.appendChild(div);
+    if (count < 10) {
+      colors1.appendChild(div);
+    } else if (count < 20) {
+      colors2.appendChild(div);
+    }
+    count++;
   }
 }
 
 // garder en mémoire la couleur sélectionnée
 function newSelectedColor(e) {
   selectedColor = e.target.dataset.color;
-  console.log(selectedColor);
 }
 
 // vérifie qu'une couleur soit sélectionné, change la couleur, puis display
@@ -47,8 +76,14 @@ function changeColor(e) {
   if (selectedColor == undefined) {
     alert("Sélectionnez une couleur dans la palette ci-dessus");
   } else {
-    cases[e.target.dataset.col][e.target.dataset.row] = selectedColor;
-    createDivs();
+    if (etat === "mousedown") {
+      cases[e.target.dataset.col][e.target.dataset.row] = selectedColor;
+      let calc =
+        parseInt(e.target.dataset.col) * sizeTableau.value +
+        (parseInt(e.target.dataset.row) + 1);
+      let div = document.querySelector(`#tableau div:nth-child(${calc})`);
+      div.style.backgroundColor = selectedColor;
+    }
   }
 }
 
@@ -63,9 +98,9 @@ sizeTableau.addEventListener("input", (e) => {
 
 function createCases() {
   cases = [];
-  for (let i = 0; i < sizeTableau.value * sizeTableau.value; i++) {
+  for (let i = 0; i < sizeTableau.value + 1; i++) {
     let newTab = [];
-    for (let j = 0; j < 10; j++) {
+    for (let j = 0; j < sizeTableau.value; j++) {
       newTab.push("#FFFFFF");
     }
     cases.push(newTab);
@@ -74,7 +109,7 @@ function createCases() {
 
 // vide le tableau et créer les divs
 function createDivs() {
-    tableau.innerText = ""
+  tableau.innerText = "";
   let col = 0;
   for (let i of cases) {
     let row = 0;
@@ -82,7 +117,7 @@ function createDivs() {
       let div = document.createElement("div");
       div.dataset.col = col;
       div.dataset.row = row;
-      div.addEventListener("click", changeColor);
+      div.addEventListener("mouseover", changeColor);
       div.style.backgroundColor = j;
       tableau.appendChild(div);
       row++;
