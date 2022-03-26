@@ -36,6 +36,10 @@
         display: flex;
         gap: 20px
       }
+      #size-container{
+        display: flex;
+        gap: 20px;
+      }
     </style>
     <h1>Sélectionnez une couleur</h1>
 
@@ -44,8 +48,10 @@
       <button id="submit" type="submit">Ajouter une couleur</button>
     </div>
   
-    <p>modifier la taille du tableau</p>
-    <input id="sizeTableau" type="number" value="24" min="10" max="40">
+    <div id="size-container">
+      <p>modifier la taille du tableau</p>
+      <input id="sizeTableau" type="number" value="24" min="10" max="40" />
+    </div>
 
     <div id="colors"></div>
 
