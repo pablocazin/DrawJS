@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Pablo Cazin - DrawJS</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
   </head>
   <body>
     <style>
@@ -75,8 +76,19 @@
       ></div>
       <div id="colors2"></div>
     </div>
+    <button onclick="takeshot()">Take Screenshot</button>
+    <div id="output"></div>
 
+    <script type="text/javascript">
+      // Define the function
+      // to screenshot the div
+      function takeshot() {
+        let div = document.getElementById("tableau");
+        html2canvas(div).then(function (canvas) {
+          document.getElementById("output").appendChild(canvas);
+        });
+      }
+    </script>
     <script src="app.js"></script>
   </body>
 </html>
-
