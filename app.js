@@ -98,7 +98,7 @@ sizeTableau.addEventListener("input", (e) => {
 
 function createCases() {
   cases = [];
-  for (let i = 0; i < sizeTableau.value + 1; i++) {
+  for (let i = 0; i < sizeTableau.value; i++) {
     let newTab = [];
     for (let j = 0; j < sizeTableau.value; j++) {
       newTab.push("#FFFFFF");
